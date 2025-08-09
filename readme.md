@@ -12,6 +12,8 @@ This project implements a serverless text-to-speech service that converts input 
 - **Amazon S3:** Stores the generated MP3 audio files securely.
 - **Presigned URLs:** Provide temporary, secure access to audio files for playback.
 
+<img width="1536" height="1024" alt="ChatGPT Image Aug 9, 2025, 12_25_05 PM" src="https://github.com/user-attachments/assets/4c462c89-476f-4ead-8c45-04b87f8b6211" />
+
 ---
 
 ## Components
@@ -19,7 +21,7 @@ This project implements a serverless text-to-speech service that converts input 
 ### 1. AWS Lambda Function
 
 - Written in Python.
-- Accepts POST requests with JSON body `{ "text": "Your text here" }`.
+- Accepts POST requests with JSON body `{ "text": "Any Text" }`.
 - Calls Amazon Polly to synthesize MP3 audio.
 - Uploads audio file to private S3 bucket.
 - Generates presigned URL valid for 1 hour.
@@ -94,5 +96,4 @@ http://static-site-for-api-polly.s3-website-us-east-1.amazonaws.com/
 
 ---
 
-## Architecture Diagram Description
 
