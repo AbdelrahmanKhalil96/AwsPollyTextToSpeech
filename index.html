@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Text to Speech with Polly + S3</title>
+</head>
+<body>
+
+  <h1>Text to Speech Generator</h1>
+
+  <textarea id="textInput" rows="4" cols="50" placeholder="Type text to convert to speech..."></textarea>
+  <br/><br/>
+  <button id="generateSpeechBtn">Generate Speech</button>
+
+  <h2>Audio Playback:</h2>
+  <audio id="audioPlayer" controls></audio>
+
+  <script>
+    const apiUrl = "https://hivoaw0c1c.execute-api.us-east-1.amazonaws.com/prod/speak";
+
+    document.getElementById("generateSpeechBtn").addEventListener("click", async () => {
+      const text = document.getElementById("textInput").value.trim();
+      if (!text) {
+        alert("Please enter some text.");
+        return;
+      }
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text })
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        console.log("API response:", data);
+
+        if (data.url) {
+          const audioPlayer = document.getElementById("audioPlayer");
+          audioPlayer.src = data.url;
+          audioPlayer.play();
+        } else {
+          alert("No audio URL returned");
+        }
+
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to generate speech: " + error.message);
+      }
+    });
+  </script>
+
+</body>
+</html>
